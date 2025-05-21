@@ -87,12 +87,29 @@ const MainContent = () => {
         
     }
 
+
+   const getPaginationButtons = (totalPages:number) => {
+    const buttons = [];
+
+    for (let i = 1; i <= totalPages; i++) {
+        buttons.push(
+            <button
+                key={i}
+                onClick={() => setCurrentPage(i)}
+                className={`mx-1 px-3 py-1 rounded ${currentPage === i ? 'bg-gray-500 text-white' : 'bg-gray-200'}`}>
+                {i}
+            </button>
+        );
+    }
+
+    return buttons;
+};
     return (
         <section className='xl:w-[64rem] lg:w-[55rem] sm:w-[40rem] xs:w-[20rem] p-5'>
             <div className="mb-5">
                 <div className="flex flex-col sm:flex-row justify-between items-center">
                     <div className="relative mb-5 mt-5">
-                        <button className="border px-4 py-2 rounded-full flex items-center">
+                        <button  onClick={()=>setDropDownOpen(!dropDownOpen)}   className="border px-4 py-2 rounded-full flex items-center">
                             {filter === "all" ? "All" : filter.charAt(0).toUpperCase() + filter.slice(1)}
                         </button>
                         {dropDownOpen && (
@@ -120,6 +137,12 @@ const MainContent = () => {
                     <button  disabled={currentPage === 1} onClick={()=>handlePageChange(currentPage-1)} className='border px-4 py-2 mx-2  rounded-full'>
         Previous
                     </button>
+                    {/* 12345 */}
+                    <div className="flex flex-wrap justify-center">
+                        {getPaginationButtons(currentPage)}
+                        
+
+                    </div>
                     <button   disabled={currentPage === totalPages} onClick={()=>handlePageChange(currentPage+1)}  className='border px-4 py-2 mx-2  rounded-full'>
         Next
                     </button>
