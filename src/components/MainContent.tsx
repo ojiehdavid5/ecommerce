@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import { useFilter } from './FilterSearch';
-import axios from 'axios';
 import BookCard from './BookCard';
 
 const MainContent = () => {
@@ -10,7 +9,7 @@ const MainContent = () => {
     const [dropDownOpen, setDropDownOpen] = useState(true);
     const itemPerPage = 12;
     const { keywords, selectedCategory, minPrice, maxPrice, searchQuery } = useFilter();
-    
+    console.log(setDropDownOpen)
     useEffect(() => {
     let url: string;
 
@@ -76,6 +75,7 @@ const MainContent = () => {
                 return filteredProducts;
         }
     })();
+    console.log(sortedProducts)
 
     const totalProducts = 100;
     const totalPages=Math.ceil(totalProducts/itemPerPage)

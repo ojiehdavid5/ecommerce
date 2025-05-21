@@ -23,6 +23,7 @@ const Sidebar = () => {
     const [categories, setCategories] = React.useState<string[]>([]);
     const [loading, setLoading] = React.useState<boolean>(true);
     const [keywords, setKeywords] = React.useState<string[]>(['Apple', 'watch', 'fashion', 'trend', 'shoe']);
+    console.log(loading)
     const handleResetFilters = () => { 
         setSearchQuery('');
         setSelectedCategory('');
