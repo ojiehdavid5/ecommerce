@@ -22,13 +22,13 @@ const Sidebar = () => {
     }=useFilter();
     const [categories, setCategories] = React.useState<string[]>([]);
     const [loading, setLoading] = React.useState<boolean>(true);
-    const [keywords, setKeywords] = React.useState<string[]>(['laptop', 'phone', 'tablet', 'watch', 'headphone']);
+    const [keywords, setKeywords] = React.useState<string[]>(['Apple', 'watch', 'fashion', 'trend', 'shoe']);
     const handleResetFilters = () => { 
         setSearchQuery('');
         setSelectedCategory('');
         setminPrice(undefined);
         setmaxPrice(undefined);
-        setKeywords('');
+        setKeywords([]);
     }
     React.useEffect(() => {
         const fetchCategories = async () => {
@@ -107,7 +107,7 @@ const Sidebar = () => {
                     {keywords.map((keyword, index) => (
                         <button
                             key={index}
-                            onClick={() => setKeywords(keyword)}
+                            onClick={() => setKeywords(keywords)}
                             className="block mb-2 px-4 py-2 w-full text-left border-2 rounded  hover:bg-gray-200">{keyword.toUpperCase()}</button>
                     
                     ))}
