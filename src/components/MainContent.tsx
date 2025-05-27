@@ -6,10 +6,29 @@ const MainContent = () => {
     const [products, setProducts] = useState<any[]>([]);
     const [filter, setFilter] = useState("all");
     const [currentPage, setCurrentPage] = useState(1);
-    const [dropDownOpen, setDropDownOpen] = useState(true);
+    const [dropDownOpen, setDropDownOpen] = useState(false);
     const itemPerPage = 12;
     const { keywords, selectedCategory, minPrice, maxPrice, searchQuery } = useFilter();
     console.log(setDropDownOpen)
+       const useDebounce = (value: string, delay: number) => {
+        const [debouncedValue, setDebouncedValue] = useState(value);
+
+        useEffect(() => {
+            const handler = setTimeout(() => {
+                setDebouncedValue(value);
+            }, delay);
+
+            return () => {
+                clearTimeout(handler);
+            };
+        }, [value, delay]);
+
+        return debouncedValue;
+    }
+
+    const debouncedSearchQuery = useDebounce(searchQuery, 50000);
+    debouncedSearchQuery && console.log('Debounced Search Query:', debouncedSearchQuery);
+
     useEffect(() => {
     let url: string;
 
@@ -105,52 +124,49 @@ const MainContent = () => {
     return buttons;
 };
     return (
-        <section className='xl:w-[64rem] lg:w-[55rem] sm:w-[40rem] xs:w-[20rem] p-5'>
-            <div className="mb-5">
-                <div className="flex flex-col sm:flex-row justify-between items-center">
-                    <div className="relative mb-5 mt-5">
-                        <button  onClick={()=>setDropDownOpen(!dropDownOpen)}   className="border px-4 py-2 rounded-full flex items-center">
-                            {filter === "all" ? "All" : filter.charAt(0).toUpperCase() + filter.slice(1)}
-                        </button>
-                        {dropDownOpen && (
-                            <div className="absolute top-full left-0 bg-white border rounded shadow-lg mt-2">
-                                <button onClick={() => setFilter('cheap')} className='block px-4 py-2 w-full text-left hover:bg-gray-200'> Cheap</button>
-                                <button onClick={() => setFilter('expensive')} className='block px-4 py-2 w-full text-left hover:bg-gray-200'> Expensive</button>
-                                <button onClick={() => setFilter('popular')} className='block px-4 py-2 w-full text-left hover:bg-gray-200'> Popular</button>
-                            </div>
-                        )}
-                    </div>
-                </div>
-                <div className="grid grid-cols-4 sm:grid-cols-3 md:grid-cols-4 gap-5">
-                    {/* Render your products here using sortedProducts */}
-                    {filteredProducts.map(product => (
-                        <BookCard key={product.id}
-                            id={product.id}
-                            title={product.title}
-                            image={product.thumbnail}
-                            price={product.price}
-                        />
-                    ))}
-                </div>
-                <div className="flex flex-col sm:flex-row justify-between items-center mt-5 ">
-                    {/* previous */}
-                    <button  disabled={currentPage === 1} onClick={()=>handlePageChange(currentPage-1)} className='border px-4 py-2 mx-2  rounded-full'>
-        Previous
+    <section className='flex-1 p-5'>
+        <div className="container mx-auto">
+            <div className="flex flex-col sm:flex-row justify-between items-center mb-5">
+                <div className="relative">
+                    <button onClick={() => setDropDownOpen(!dropDownOpen)} className="border px-4 py-2 rounded-full flex items-center">
+                        {filter === "all" ? "All" : filter.charAt(0).toUpperCase() + filter.slice(1)}
                     </button>
-                    {/* 12345 */}
-                    <div className="flex flex-wrap justify-center">
-                        {getPaginationButtons(currentPage)}
-                        
-
-                    </div>
-                    <button   disabled={currentPage === totalPages} onClick={()=>handlePageChange(currentPage+1)}  className='border px-4 py-2 mx-2  rounded-full'>
-        Next
-                    </button>
-
+                    {dropDownOpen && (
+                        <div className="absolute top-full left-0 bg-white border rounded shadow-lg mt-2">
+                            <button onClick={() => setFilter('cheap')} className='block px-4 py-2 w-full text-left hover:bg-gray-200'> Cheap</button>
+                            <button onClick={() => setFilter('expensive')} className='block px-4 py-2 w-full text-left hover:bg-gray-200'> Expensive</button>
+                            <button onClick={() => setFilter('popular')} className='block px-4 py-2 w-full text-left hover:bg-gray-200'> Popular</button>
+                        </div>
+                    )}
                 </div>
             </div>
-        </section>
-    );
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5">
+                {/* Render your products here using sortedProducts */}
+                {filteredProducts.map(product => (
+                    <BookCard key={product.id}
+                        id={product.id}
+                        title={product.title}
+                        image={product.thumbnail}
+                        price={product.price}
+                    />
+                ))}
+            </div>
+            <div className="flex flex-col sm:flex-row justify-between items-center mt-5">
+                {/* Previous */}
+                <button disabled={currentPage === 1} onClick={() => handlePageChange(currentPage - 1)} className='border px-4 py-2 mx-2 rounded-full'>
+                    Previous
+                </button>
+                {/* Pagination buttons */}
+                <div className="flex flex-wrap justify-center">
+                    {getPaginationButtons(currentPage)}
+                </div>
+                <button disabled={currentPage === totalPages} onClick={() => handlePageChange(currentPage + 1)} className='border px-4 py-2 mx-2 rounded-full'>
+                    Next
+                </button>
+            </div>
+        </div>
+    </section>
+);
 }
 
 export default MainContent;

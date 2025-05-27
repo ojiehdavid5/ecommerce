@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState,useEffect } from "react";
 import type { ReactNode } from 'react';
 interface FilterContextType { 
     searchQuery: string;
@@ -21,6 +21,8 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
     const [minPrice, setminPrice] = useState<number | undefined>(undefined);
     const [maxPrice, setmaxPrice] = useState<number | undefined>(undefined);
     const [keywords, setKeywords] = useState<string>("laptop, phone, tablet, watch, headphone");
+
+
     const value = {
         searchQuery,
         setSearchQuery,

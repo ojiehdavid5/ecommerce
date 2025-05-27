@@ -51,72 +51,75 @@ const Sidebar = () => {
     }, []);
 
     return (
-<div className='w-64 h-screen p-5 border-r-2 border-gray-300 bg-white'>
-    <h1 className="text-2xl font-bold mb-10 mt-4">React Store</h1>
-    <section>
-        <input 
-            type="text" 
-            className="border-2 rounded px-2 mb-3" 
-                    placeholder="Search product" 
-                    value={searchQuery}
-                    onChange={e=> setSearchQuery(e.target.value)}
-        />
-
-        <div className="flex justify-center items-center mb-3">
+        <div className="flex flex-col sm:flex-row relative">
+    <div className='w-full sm:w-64 h-screen p-5 border-r-2 border-gray-300 bg-white'>
+        <h1 className="text-2xl font-bold mb-10 mt-4">React Store</h1>
+        <section>
             <input 
                 type="text" 
-                className='border-2 mr-2 px-5 py-3 w-full' 
-                        placeholder='min' 
-                        value={minPrice}
-                        onChange={e => setminPrice(Number(e.target.value))}
+                className="border-2 rounded px-2 mb-3 w-full" 
+                placeholder="Search product" 
+                value={searchQuery}
+                onChange={e => setSearchQuery(e.target.value)}
             />
-            <input 
-                type="text" 
-                className='border-2 mr-2 px-5 py-3 w-full' 
-                        placeholder='max' 
-                        value={maxPrice}
-                        onChange={e => setmaxPrice(Number(e.target.value))}
-            />
-        </div>
 
-        {/* Categories */}
-        <div className="mb-5">
-            <h2 className="text-2xl font-semibold mb-3">Categories</h2>
-        </div>
-
-        {categories.map((category, index) => (
-            <label key={index} className="block mb-2">
+            <div className="flex flex-col sm:flex-row justify-center items-center mb-3">
                 <input 
-                    type="radio" 
-                    name='category' 
-                    value={category}
-                    onChange={e => setSelectedCategory(e.target.value)}
-                    checked={selectedCategory === category}
-                    className="mr-2" 
+                    type="text" 
+                    className='border-2 mr-0 sm:mr-2 mb-2 sm:mb-0 px-5 py-3 w-full' 
+                    placeholder='min' 
+                    value={minPrice}
+                    onChange={e => setminPrice(Number(e.target.value))}
                 />
-                {category.toUpperCase()}
-            </label>
-        ))}
-            </section>
-            
-            {/* kEYWORDS */}
-            <div className="mb-5 mt-4" >
-                <h2 className="text-xl font-semibold mb-3">
-                    Keyword
-                </h2>
-                <div className="">
-                    {keywords.map((keyword, index) => (
-                        <button
-                            key={index}
-                            onClick={() => setKeywords(keywords)}
-                            className="block mb-2 px-4 py-2 w-full text-left border-2 rounded  hover:bg-gray-200">{keyword.toUpperCase()}</button>
-                    
-                    ))}
-                </div>
+                <input 
+                    type="text" 
+                    className='border-2 mr-0 sm:mr-2 mb-2 sm:mb-0 px-5 py-3 w-full' 
+                    placeholder='max' 
+                    value={maxPrice}
+                    onChange={e => setmaxPrice(Number(e.target.value))}
+                />
             </div>
-            <button  onClick={handleResetFilters}  className='w-full mb-[4rem] py-2 bg-black text-white rounded mt-5'>
-                Reset Filter</button>
-</div>    );
-};
+
+            {/* Categories */}
+            <div className="mb-5">
+                <h2 className="text-2xl font-semibold mb-3">Categories</h2>
+            </div>
+
+            {categories.map((category, index) => (
+                <label key={index} className="block mb-2">
+                    <input 
+                        type="radio" 
+                        name='category' 
+                        value={category}
+                        onChange={e => setSelectedCategory(e.target.value)}
+                        checked={selectedCategory === category}
+                        className="mr-2" 
+                    />
+                    {category.toUpperCase()}
+                </label>
+            ))}
+        </section>
+        
+        {/* Keywords */}
+        <div className="mb-5 mt-4">
+            <h2 className="text-xl font-semibold mb-3">Keyword</h2>
+            <div>
+                {keywords.map((keyword, index) => (
+                    <button
+                        key={index}
+                        onClick={() => setKeywords(keywords)}
+                        className="block mb-2 px-4 py-2 w-full text-left border-2 rounded hover:bg-gray-200">
+                        {keyword.toUpperCase()}
+                    </button>
+                ))}
+            </div>
+        </div>
+        
+        <button onClick={handleResetFilters} className='w-full mb-[4rem] py-2 bg-black text-white rounded mt-5'>
+            Reset Filter
+        </button>
+    </div>
+    </div>
+)};
 
 export default Sidebar;
