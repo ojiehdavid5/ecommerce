@@ -10,25 +10,6 @@ const MainContent = () => {
     const itemPerPage = 12;
     const { keywords, selectedCategory, minPrice, maxPrice, searchQuery } = useFilter();
     console.log(setDropDownOpen)
-       const useDebounce = (value: string, delay: number) => {
-        const [debouncedValue, setDebouncedValue] = useState(value);
-
-        useEffect(() => {
-            const handler = setTimeout(() => {
-                setDebouncedValue(value);
-            }, delay);
-
-            return () => {
-                clearTimeout(handler);
-            };
-        }, [value, delay]);
-
-        return debouncedValue;
-    }
-
-    const debouncedSearchQuery = useDebounce(searchQuery, 50000);
-    debouncedSearchQuery && console.log('Debounced Search Query:', debouncedSearchQuery);
-
     useEffect(() => {
     let url: string;
 

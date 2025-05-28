@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFilter } from './FilterSearch';
 
 interface Product {
@@ -31,6 +31,30 @@ const Sidebar = () => {
         setmaxPrice(undefined);
         setKeywords([]);
     }
+
+
+
+           const useDebounce = (value: string, delay: number) => {
+            const [debouncedValue, setDebouncedValue] = useState(value);
+    
+            useEffect(() => {
+                const handler = setTimeout(() => {
+                    setDebouncedValue(value);
+                }, delay);
+    
+                return () => {
+                    clearTimeout(handler);
+                };
+            }, [value, delay]);
+    
+            return debouncedValue;
+        }
+    
+    const debouncedSearchQuery = useDebounce(searchQuery, 5000);
+    console.log(debouncedSearchQuery);
+    
+    
+    
     React.useEffect(() => {
         const fetchCategories = async () => {
             try {
