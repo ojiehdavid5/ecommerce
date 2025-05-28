@@ -8,6 +8,7 @@ import PopularBlogs from './components/PopularBlogs'
 
 function App() {
 
+
   return (
     <Router>
       <div className="flex h-screen">
