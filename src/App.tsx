@@ -5,12 +5,14 @@ import MainContent from './components/MainContent'
 import ProductPage from './components/ProductPage'
 import TopSellers from './components/TopSellers'
 import PopularBlogs from './components/PopularBlogs'
+import { FilterProvider } from './components/FilterSearch'
 
 function App() {
 
 
   return (
-    <Router>
+    <FilterProvider>
+          <Router>
       <div className="flex h-screen">
         <Sidebar />
         <div className="rounded w-full flex justify-center flex-wrap">
@@ -28,6 +30,8 @@ function App() {
 
     </Router>
     
+
+    </FilterProvider>
   )
 }
 
